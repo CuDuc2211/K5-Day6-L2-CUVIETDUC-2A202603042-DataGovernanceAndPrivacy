@@ -19,6 +19,6 @@
 | Chỉ số lỗi xấu (miss / false alarm / false reject) | Miss = ảnh lỗi `eval` ngoài top 20; báo `Precision@B` = ảnh lỗi trong top 20 / số ảnh thực có trong top 20; false alarm theo `light` = ảnh sạch trong top 20 / tổng ảnh sạch của slice đó. |
 | Slices sẽ báo cáo (≥2) | `light=day`, `light=dusk`, `light=night` (evaluator sẵn có); phân tích thêm `camera_id=cam_A/cam_B` thủ công nếu có nhãn và đủ mẫu. Ghi N từng slice, không kết luận quá mức từ slice nhỏ. |
 | Cách báo độ bất định khi N nhỏ (Wilson CI / bootstrap) | Khi có nhãn thật, báo numerator/denominator và Wilson 95% CI cho Recall@20; nếu tính CI bằng bootstrap, lấy mẫu theo cảnh gốc để tránh coi bốn ảnh cùng cảnh là độc lập. Không tạo CI khi chưa có GT. |
-| Ngày giờ chốt + người chốt | 14/11/2026 15:26 UTC+07; Cù Việt Đức (mã học viên 2A202603042, Git author `CuDuc2211`). Chốt tham số trong `configs/lab.yaml` trước official eval; mã đang ở bản local, commit/push do người học xác nhận sau. |
+| Ngày giờ chốt + người chốt | 14/11/2026 15:26 UTC+07; Cù Việt Đức (mã học viên 2A202603042, Git author `CuDuc2211`). Chốt tham số trong `configs/lab.yaml` trước official eval; mã PoC sau đó được commit/push ở `f9a156d` và gắn tag `final-24h`. Bản hiệu đính hành chính sau tag không đổi tham số hay metric. |
 
 Nếu baseline = 0 thì ghi rõ "baseline = 0" thay vì phần trăm cải thiện.

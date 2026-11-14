@@ -10,8 +10,8 @@
 | Chủ đề | T02 · ảnh mờ/lóa/tối/nén, xếp hàng đợi review B=20 |
 | Người chịu trách nhiệm | Cù Việt Đức, mã học viên 2A202603042; Git author cấu hình: CuDuc2211 |
 | Repo | https://github.com/CuDuc2211/K5-Day6-L2-CUVIETDUC-2A202603042-DataGovernanceAndPrivacy |
-| Demo/final tag | |
-| Deadline | |
+| Demo/final tag | `final-24h` đã tạo và đẩy lên `origin`, trỏ tới commit `f9a156d`; chưa có tag `demo-180m`. Bản hiệu đính hành chính sau tag nằm trên `main`, **không nằm trong tag đã công bố**. |
+| Deadline | Người học xác nhận bản nộp đúng mốc +24h của lớp; ngày/giờ deadline chính xác chưa được cung cấp. |
 
 ## 01. Vấn đề, người chịu rủi ro và quyết định
 
@@ -107,7 +107,7 @@ Không được suy luận “đạt GDPR/luật Việt Nam” từ pipeline QC 
 
 ## 10. Đóng góp & trạng thái nộp
 
-Bài làm cá nhân: Cù Việt Đức (2A202603042); `CuDuc2211` là Git identity hiện được cấu hình; mã sửa ở `src/pipeline.py`, `src/t02_scoring.py`, `src/baseline_t02.py`, `tests/test_t02_*.py`, config và báo cáo. `reports/team_contributions.csv` ghi một người; lịch sử repo sẵn có chứa tác giả khác từ upstream nên **không gán commit cũ cho người học**. Commit/tag cuối và URL push chỉ xác nhận sau khi người học xem lại; không giả tạo bằng chứng đóng góp. Dùng `git shortlog -sne --all` và `git log --oneline` để xác minh commit thực tế.
+Bài làm cá nhân: Cù Việt Đức (2A202603042); `CuDuc2211` là Git identity hiện được cấu hình. Commit thực chất `f9a156d` chứa `src/pipeline.py`, `src/t02_scoring.py`, `src/baseline_t02.py`, `tests/test_t02_*.py`, config và báo cáo; đã đẩy lên `origin/main` và được tag `final-24h`. `reports/team_contributions.csv` ghi SHA này cho một người; lịch sử starter có tác giả upstream nên **không gán commit cũ cho người học**. Bản hiệu đính trạng thái nộp sau tag là commit khác trên `main`, không nằm trong tag cũ. Không giả tạo bằng chứng đóng góp; dùng `git shortlog -sne --all` và `git log --oneline` để xác minh.
 
 ## 11. References (truy cập 14/11/2026)
 
@@ -124,4 +124,5 @@ Bài làm cá nhân: Cù Việt Đức (2A202603042); `CuDuc2211` là Git identi
 - [x] Người học tự review đủ top 20, có note (AI hỗ trợ diễn đạt), giữ 6 ca `escalate` ở trạng thái HOLD.
 - [ ] Giải quyết 6 ca `escalate`/phê duyệt độc lập nếu cần release; xác nhận nhãn dev proxy nếu dùng làm gold set nội bộ.
 - [ ] Chạy official eval với overlay GT của giảng viên, tạo `metrics_baseline.json`/`metrics_poc.json`/bảng official.
-- [ ] Xác nhận mã nhóm chính thức (nếu có)/deadline, commit và tag theo yêu cầu lớp, sau đó push khi người học đồng ý.
+- [x] Commit `f9a156d`, push `origin/main`, tạo và push tag `final-24h` cho bản đầu tiên.
+- [ ] Xác nhận mã nhóm chính thức (nếu có)/ngày giờ deadline; quyết định cách đưa bản hiệu đính này vào tag nếu lớp yêu cầu tag chứa báo cáo cập nhật.
