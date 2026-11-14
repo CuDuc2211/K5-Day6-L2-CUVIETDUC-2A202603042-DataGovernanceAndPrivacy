@@ -4,8 +4,8 @@ Starter repo cho bài lab **Data Pipeline, Privacy & Production PoC**: 14 challe
 Repo cung cấp **dữ liệu offline + hạ tầng dùng chung + metric chuẩn + template báo cáo** để nhóm tập trung vào phần quan trọng:
 vấn đề, baseline, thuật toán, đánh giá trung thực, human-in-the-loop và quyết định GO/HOLD/REWORK.
 
-> Repo **không** chứa lời giải. `src/pipeline.py` là file nhóm sở hữu; mọi thuật toán (kể cả baseline) do nhóm tự cài.
-> Tài liệu học tập, không thay tư vấn pháp lý.
+> Bản upstream là starter không có lời giải. **Bản làm cá nhân này đã cài T02** trong `src/pipeline.py` và `src/t02_scoring.py`; T01/T03–T14 chưa được cài trong pipeline mặc định.
+> Báo cáo và kết quả **dev proxy**: `reports/group_report.md`; demo 5 slide offline: `demo/t02_showcase.html`. Nhãn GT chính thức chưa có trong repo học viên. Trên Windows dùng lệnh PowerShell ở mục 08 của báo cáo (`Makefile` dùng `.venv/bin/python`). Tài liệu học tập, không thay tư vấn pháp lý.
 
 ## 1. Quickstart (≤ 5 phút, chạy offline)
 

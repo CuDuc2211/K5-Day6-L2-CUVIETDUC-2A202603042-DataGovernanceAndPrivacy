@@ -1,0 +1,4 @@
+ts,scope,status,canonical,reason_code,reason,owner,evidence
+2026-11-14T08:14:21+00:00,t02,HOLD,HOLD,REVIEW_PENDING,Top-B review is incomplete.,Chủ dự án (cá nhân),out\poc\review_queue.csv;out\poc\ranked_review.csv
+2026-11-14T08:17:49+00:00,t02,HOLD,HOLD,REVIEW_PENDING,Top-B review is incomplete.,CuDuc2211 (chủ dự án cá nhân),out\poc\review_queue.csv;out\poc\ranked_review.csv
+2026-11-14T09:32:23+00:00,t02,HOLD,HOLD,REVIEW_ESCALATED,A reviewer escalated a case.,Cù Việt Đức (2A202603042),out\poc\review_queue.csv;out\poc\ranked_review.csv

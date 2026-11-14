@@ -1,0 +1,8 @@
+slice,n,recall_in_topB,false_alarm_in_topB
+light=day,36,0.7777777777777778,0.0
+light=dusk,16,0.625,0.0
+light=night,4,0.5,0.0
+defect=blur,8,1.0,
+defect=compression,10,0.6,
+defect=dark,6,0.6666666666666666,
+defect=glare,4,0.5,

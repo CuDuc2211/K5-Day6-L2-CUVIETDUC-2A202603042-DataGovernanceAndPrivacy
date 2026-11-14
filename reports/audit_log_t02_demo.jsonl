@@ -1,0 +1,3 @@
+{"ts": "2026-11-14T08:17:49+00:00", "actor": "AI_assisted_provisional", "action": "review:approve", "item_id": "img_00_2", "before": null, "after": null, "reason": "Visible block/compression artifacts in dev; AI-assisted provisional, no human approval.", "extra": {}}
+{"ts": "2026-11-14T08:17:49+00:00", "actor": "AI_assisted_provisional", "action": "review:approve", "item_id": "img_20_3", "before": null, "after": null, "reason": "Bright local glare near car on dev; AI-assisted provisional, no human approval.", "extra": {}}
+{"ts": "2026-11-14T08:17:49+00:00", "actor": "CuDuc2211 (chủ dự án cá nhân)", "action": "release_decision", "item_id": "t02", "before": null, "after": "HOLD", "reason": "REVIEW_PENDING", "extra": {}}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>T02 · Raw QC Triage — demo cá nhân</title>
+<style>
+:root{--bg:#111b1e;--ink:#f2f0e8;--soft:#b9c7c3;--line:#41514f;--accent:#a7d8bf;--warn:#ffcf92;--scale:1}
+*{box-sizing:border-box}body{margin:0;background:#071012;color:var(--ink);font-family:Arial,"Segoe UI",sans-serif}
+#deck{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform:translate(-50%,-50%) scale(var(--scale));background:var(--bg);overflow:hidden;box-shadow:0 24px 80px #0009}
+.slide{display:none;width:100%;height:100%;padding:64px 80px 44px;position:relative}.slide.active{display:block}
+.kicker{font:700 18px/1.3 Consolas,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 26px}
+h1{font-size:70px;line-height:1.05;letter-spacing:-.035em;margin:0 0 22px;max-width:1040px}h2{font-size:49px;line-height:1.12;letter-spacing:-.025em;margin:0 0 36px}
+p{font-size:27px;line-height:1.42;margin:0 0 22px;color:var(--soft)}strong{color:var(--ink)}
+.rule{border-top:1px solid var(--line);padding-top:24px}.row{display:grid;grid-template-columns:1fr 1fr;gap:72px}.col h3{font-size:28px;margin:0 0 15px}.col p{font-size:25px}.statement{font-size:32px;line-height:1.37;max-width:1000px;color:var(--ink)}
+.eyebrow{font:18px Consolas,monospace;color:var(--soft);text-transform:uppercase;letter-spacing:.08em}
+.flow{display:flex;align-items:center;gap:14px;font:700 25px Consolas,monospace;margin-top:38px}.flow span{padding:18px 19px;border:1px solid var(--line)}.flow b{color:var(--accent)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:43px}.metric{border-top:1px solid var(--line);padding-top:25px}.metric .label{font-size:24px;color:var(--soft)}.metric .value{display:block;font-size:92px;font-weight:700;letter-spacing:-.04em;margin:5px 0}.metric:nth-child(2) .value{color:var(--accent)}.metric small{font-size:23px;color:var(--soft)}
+.examples{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}.case{border-top:1px solid var(--line);padding-top:15px}.case img{width:100%;height:197px;object-fit:contain;background:#020809}.case h3{font-size:25px;margin:17px 0 8px}.case p{font-size:20px;line-height:1.35;margin:0}.case code{color:var(--accent)}
+.gate{display:grid;grid-template-columns:300px 1fr;gap:65px;align-items:start;margin-top:42px}.status{font-size:104px;color:var(--warn);font-weight:800;line-height:1}.gate li{font-size:26px;line-height:1.35;margin-bottom:19px}
+.foot{position:absolute;bottom:35px;left:80px;right:80px;border-top:1px solid var(--line);padding-top:15px;font:18px Consolas,monospace;color:var(--soft);display:flex;justify-content:space-between}
+.controls{position:fixed;right:24px;top:24px;display:flex;gap:10px;align-items:center;color:#fff;font:16px Consolas,monospace}.controls button{border:1px solid #8fada4;background:#152529;color:#fff;min-width:46px;min-height:46px;cursor:pointer;font-size:24px}.controls button:hover,.controls button:focus-visible{background:#34564e;outline:2px solid #b6e3ce}
+@media print{body{background:white;color:black}#deck{position:static;width:1280px;height:auto;transform:none;box-shadow:none}.slide,.slide.active{display:block!important;page-break-after:always;height:720px;background:var(--bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}.controls{display:none}@page{size:16in 9in;margin:0}}
+</style>
+</head>
+<body>
+<main id="deck" aria-label="Bài trình bày T02">
+<section class="slide" aria-label="Trang 1: bài toán">
+<p class="kicker">T02 / Raw QC Triage · bài cá nhân</p><h1>Đưa ảnh đáng ngờ đến người review trước.</h1>
+<p class="statement">96 ảnh synthetic, 4 dạng lỗi cần tìm: <strong>mờ · tối · lóa · nén</strong>. Chỉ có ngân sách xem lại <strong>20 ảnh</strong>.</p>
+<div class="row rule" style="margin-top:64px"><div class="col"><h3>Đầu vào</h3><p>JPEG + metadata camera/ánh sáng + manifest SHA-256; 56 ảnh dev, 40 ảnh eval.</p></div><div class="col"><h3>Đầu ra</h3><p>Xếp hạng 96 ảnh, queue top 20, contact sheet offline, audit và quyết định GO/HOLD/REWORK.</p></div></div>
+<div class="foot"><span>OFFLINE · seed 42 · strict provenance</span><span>01 / 05</span></div></section>
+<section class="slide" aria-label="Trang 2: phương pháp">
+<p class="kicker">Phương pháp / baseline → PoC</p><h2>Một tín hiệu không bắt được mọi lỗi.</h2>
+<div class="row"><div class="col"><p class="eyebrow">Baseline</p><p>Laplacian toàn ảnh: ảnh ít nét được ưu tiên. Đơn giản nhưng dễ báo nhầm camera mềm và bỏ sót lóa nhỏ.</p></div><div class="col"><p class="eyebrow">PoC</p><p>Độ nét chuẩn hóa theo camera <strong>chỉ từ dev</strong>; thêm tỷ lệ pixel tối, lóa vùng quan tâm và biên khối 8 px.</p></div></div>
+<div class="flow"><span>kiểm hash</span><b>→</b><span>trích cue</span><b>→</b><span>xếp hạng</span><b>→</b><span>review</span><b>→</b><span>quyết định</span></div>
+<p style="font-size:22px;margin-top:39px">Điểm cao = nghi lỗi hơn. Override của reviewer đổi hành động, <strong>không đổi score</strong>.</p>
+<div class="foot"><span>Không đọc nhãn GT trong pipeline</span><span>02 / 05</span></div></section>
+<section class="slide" aria-label="Trang 3: so sánh proxy">
+<p class="kicker">Đối chiếu / chỉ dev proxy</p><h2>Recall@20 tăng trên nhãn dev tạm.</h2>
+<div class="compare"><div class="metric"><span class="label">Baseline · Laplacian</span><span class="value">16/28</span><small>Defect Recall@20 = 0,5714</small></div><div class="metric"><span class="label">PoC · đa cue</span><span class="value">20/28</span><small>Defect Recall@20 = 0,7143</small></div></div>
+<p class="rule" style="margin-top:65px;font-size:24px">56 ảnh <strong>dev</strong>; B=20 sau khi lọc dev. Nhãn do AI hỗ trợ quan sát, chưa được người học xác nhận. Đây <strong>không phải điểm eval của giảng viên</strong> và không chứng minh tổng quát hóa.</p>
+<div class="foot"><span>Bảng sinh từ src.evaluate + src.compare</span><span>03 / 05</span></div></section>
+<section class="slide" aria-label="Trang 4: failure cases">
+<p class="kicker">Kiểm tra bằng ảnh thật trong fixture</p><h2>Ba ca để giải thích sai số.</h2>
+<div class="examples"><div class="case"><img src="../fixtures/t02_raw_qc/images/img_09_0.jpg" alt="Ảnh img_09_0, tham chiếu camera mềm"><h3><code>img_09_0</code> · báo nhầm</h3><p>Baseline xem ảnh cam_B mềm là mờ; PoC so với camera cùng loại.</p></div><div class="case"><img src="../fixtures/t02_raw_qc/images/img_20_3.jpg" alt="Ảnh img_20_3, vùng sáng chói cục bộ"><h3><code>img_20_3</code> · bắt được</h3><p>Vùng chói nhỏ bị Laplacian toàn ảnh bỏ sót; cue lóa ROI đưa vào queue.</p></div><div class="case"><img src="../fixtures/t02_raw_qc/images/img_22_3.jpg" alt="Ảnh img_22_3, vùng lóa lệch ROI"><h3><code>img_22_3</code> · còn sót</h3><p>Vùng lóa lệch ROI; cần mở rộng vùng kiểm tra mà không tune trên eval.</p></div></div>
+<div class="foot"><span>Ví dụ theo nhãn dev proxy, chưa phải GT chính thức</span><span>04 / 05</span></div></section>
+<section class="slide" aria-label="Trang 5: risk gate">
+<p class="kicker">Quyết định / chưa release</p><h2>Hệ thống chạy được, nhưng chưa được duyệt.</h2>
+<div class="gate"><div class="status">HOLD</div><div><ul><li><strong>20/20</strong> quyết định do Cù Việt Đức chọn: 12 đồng ý chụp lại, 2 KEEP có điều kiện, 6 cần đánh giá thêm. AI hỗ trợ diễn đạt ghi chú.</li><li>Chưa có <strong>ground truth eval</strong> của giảng viên để tính điểm chính thức.</li><li>Cần giải quyết 6 ca còn phân vân; chỉ chạy official eval khi nhận GT. Không coi self-review là phê duyệt độc lập.</li></ul></div></div>
+<p style="font-size:22px;margin-top:22px;color:var(--warn)">Lý do: REVIEW_ESCALATED · Chi tiết khó nhìn rõ dù độ mờ tổng thể không quá cao.</p>
+<div class="foot"><span>Chi tiết: reports/group_report.md</span><span>05 / 05</span></div></section>
+</main>
+<nav class="controls" aria-label="Điều khiển slide"><button id="prev" aria-label="Trang trước">‹</button><span id="count" aria-live="polite"></span><button id="next" aria-label="Trang sau">›</button></nav>
+<script>
+(() => {
+  const slides = [...document.querySelectorAll('.slide')];
+  let index = 0;
+  try { index = Math.min(slides.length - 1, Math.max(0, Number(localStorage.getItem('t02-slide')) || 0)); } catch (_) {}
+  function show(n) {
+    index = Math.min(slides.length - 1, Math.max(0, n));
+    slides.forEach((slide, i) => { slide.classList.toggle('active', i === index); slide.setAttribute('aria-hidden', i === index ? 'false' : 'true'); });
+    document.getElementById('count').textContent = `${index + 1} / ${slides.length}`;
+    try { localStorage.setItem('t02-slide', String(index)); } catch (_) {}
+  }
+  function resize() { document.documentElement.style.setProperty('--scale', String(Math.min(innerWidth / 1280, innerHeight / 720) * .96)); }
+  document.getElementById('prev').addEventListener('click', () => show(index - 1));
+  document.getElementById('next').addEventListener('click', () => show(index + 1));
+  addEventListener('keydown', event => { if (['ArrowRight', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); show(index + 1); } if (['ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); show(index - 1); } });
+  addEventListener('resize', resize); resize(); show(index);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# Keep manifest-pinned text fixtures byte-identical on Windows, macOS and Linux.
+* text=auto eol=lf
+*.jpg -text -eol
+*.jpeg -text -eol
+*.png -text -eol
+*.bin -text -eol
+*.onnx -text -eol
+*.pkl -text -eol
